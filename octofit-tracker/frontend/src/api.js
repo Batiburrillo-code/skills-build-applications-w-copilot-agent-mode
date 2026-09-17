@@ -3,7 +3,7 @@ const apiOrigin = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
   : 'http://localhost:8000'
 
-export const apiBaseUrl = `${apiOrigin}/api`
+export const apiBaseUrl = apiOrigin
 
 function normalizeResponse(payload) {
   if (Array.isArray(payload)) return payload
@@ -12,8 +12,8 @@ function normalizeResponse(payload) {
   return []
 }
 
-export async function fetchCollection(component) {
-  const response = await fetch(`${apiBaseUrl}/${component}/`)
-  if (!response.ok) throw new Error(`Unable to load ${component}`)
+export async function fetchCollection(path) {
+  const response = await fetch(`${apiBaseUrl}${path}`)
+  if (!response.ok) throw new Error(`Unable to load ${path}`)
   return normalizeResponse(await response.json())
 }
